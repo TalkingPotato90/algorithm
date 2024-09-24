@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -17,41 +17,34 @@ public class Main {
         int lastValue = -1;
         for (int i = 0; i < lines; i++) {
             String s = br.readLine();
+            String result = "-1";
             if (s.contains("push")) {
                 lastValue = Integer.parseInt(s.substring(s.indexOf(" ") + 1));
                 queue.offer(lastValue);
+                continue;
             } else if (s.contains("pop")) {
-                if (queue.isEmpty()) {
-                    bw.write("-1\n");
-                } else {
-                    bw.write(queue.remove()+"\n");
+                if (!queue.isEmpty()) {
+                    result = Integer.toString(queue.remove());
                 }
-                bw.flush();
             } else if (s.contains("size")) {
-                bw.write(queue.size()+"\n");
-                bw.flush();
+                result = Integer.toString(queue.size());
             } else if (s.contains("empty")) {
                 if (queue.isEmpty()) {
-                    bw.write("1\n");
+                    result = "1";
                 } else {
-                    bw.write("0\n");
+                    result = "0";
                 }
-                bw.flush();
             } else if (s.contains("front")) {
-                if (queue.isEmpty()) {
-                    bw.write("-1\n");
-                } else {
-                    bw.write(queue.peek()+"\n");
+                if (!queue.isEmpty()) {
+                    result = Integer.toString(queue.peek());
                 }
-                bw.flush();
             } else if (s.contains("back")) {
-                if (queue.isEmpty()) {
-                    bw.write("-1\n");
-                } else {
-                    bw.write(lastValue+"\n");
+                if (!queue.isEmpty()) {
+                    result = Integer.toString(lastValue);
                 }
-                bw.flush();
             }
+            bw.write(result+"\n");
+            bw.flush();
         }
         bw.close();
     }
