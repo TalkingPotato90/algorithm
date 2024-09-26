@@ -3,9 +3,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+        public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -13,14 +14,15 @@ public class Main {
         char[] str = br.readLine().toCharArray();
 
         int hashAlpha;
-        long hash = 0;
+        BigInteger hash = BigInteger.valueOf(0);
+        BigInteger num = BigInteger.valueOf(31);
 
         for (int i = 0; i < length; i++) {
             hashAlpha = str[i] - 96;
-            hash += hashAlpha * (long)Math.pow(31, i);
+            hash = hash.add(BigInteger.valueOf(hashAlpha).multiply(num.pow(i))).mod(BigInteger.valueOf(1234567891));
         }
 
-        bw.write(Long.toString(hash));
+        bw.write(hash.toString());
         bw.flush();
         bw.close();
     }
