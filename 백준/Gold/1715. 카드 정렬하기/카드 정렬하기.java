@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 import java.util.PriorityQueue;
 
 public class Main {
-        public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -18,19 +18,21 @@ public class Main {
         }
 
         int result = 0;
+        int first;
+        int second;
+        int sum;
 
         while (cards.size() > 1) {
-            int first = cards.poll();
-            int second = cards.poll();
+            first = cards.poll();
+            second = cards.poll();
 
-            int sum = first + second;
+            sum = first + second;
 
             result += sum;
 
             cards.add(sum);
         }
-
-
+        
         bw.write(String.valueOf(result));
         bw.flush();
         bw.close();
