@@ -3,10 +3,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
-import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class Main {
-        public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -14,12 +15,12 @@ public class Main {
 
         int x = Integer.parseInt(box[1]);
         int y = Integer.parseInt(box[0]);
-        int day = -1;
+        int day = 0;
 
         int[][] tomato = new int[x][y];
 
-        Stack<int[]> firstStack = new Stack<>();
-        Stack<int[]> tempStack = new Stack<>();
+        Queue<int[]> firstQue = new LinkedList<>();
+        boolean isBadTomatato = false;
 
         String[] tomatoLine;
 
@@ -29,46 +30,48 @@ public class Main {
                 tomato[i][j] = Integer.parseInt(tomatoLine[j]);
 
                 if (tomato[i][j] == 1) {
-                    firstStack.push(new int[]{i, j});
+                    firstQue.offer(new int[]{i, j});
+                }else if (tomato[i][j] == 0) {
+                    isBadTomatato = true;
                 }
             }
         }
 
-        if (firstStack.isEmpty()) {
+        if (!isBadTomatato) {
+            bw.write("0\n");
+            bw.flush();
+            bw.close();
+            return;
+        }
+
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+
+        if(firstQue.isEmpty()) {
             day = -1;
-        } else {
-            while (!firstStack.isEmpty()) {
-                while (!firstStack.isEmpty()) {
-                    int[] base = firstStack.pop();
+        }
 
-                    int[] tempRight = new int[]{base[0] + 1, base[1]};
-                    int[] tempLeft = new int[]{base[0] - 1, base[1]};
-                    int[] tempUp = new int[]{base[0], base[1] - 1};
-                    int[] tempDown = new int[]{base[0], base[1] + 1};
+        while (!firstQue.isEmpty()) {
+            int size = firstQue.size();
+            boolean isGoodTomatato = false;
 
-                    if (tempRight[0] < x && tomato[tempRight[0]][tempRight[1]] == 0) {
-                        tomato[tempRight[0]][tempRight[1]] = 1;
-                        tempStack.push(tempRight);
-                    }
+            for (int i = 0; i < size; i++) {
+                int[] base = firstQue.poll();
 
-                    if (tempLeft[0] >= 0 && tomato[tempLeft[0]][tempLeft[1]] == 0) {
-                        tomato[tempLeft[0]][tempLeft[1]] = 1;
-                        tempStack.push(tempLeft);
-                    }
+                for (int j = 0; j < 4; j++) {
+                    int nx = base[0] + dx[j];
+                    int ny = base[1] + dy[j];
 
-                    if (tempUp[1] >= 0 && tomato[tempUp[0]][tempUp[1]] == 0) {
-                        tomato[tempUp[0]][tempUp[1]] = 1;
-                        tempStack.push(tempUp);
-                    }
-
-                    if (tempDown[1] < y && tomato[tempDown[0]][tempDown[1]] == 0) {
-                        tomato[tempDown[0]][tempDown[1]] = 1;
-                        tempStack.push(tempDown);
+                    if (nx >= 0 && nx < x && ny >= 0 && ny < y && tomato[nx][ny] == 0) {
+                        tomato[nx][ny] = 1;
+                        firstQue.offer(new int[]{nx, ny});
+                        isGoodTomatato = true;
                     }
                 }
+            }
+
+            if (isGoodTomatato) {
                 day++;
-                firstStack.addAll(tempStack);
-                tempStack.clear();
             }
         }
 
