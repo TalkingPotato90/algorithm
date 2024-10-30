@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,30 +9,49 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
-        Set<Integer> sangSet = new HashSet<>();
-
+        int[] sang = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
-
         for (int i = 0; i < N; i++) {
-            sangSet.add(Integer.parseInt(st.nextToken()));
+            sang[i] = Integer.parseInt(st.nextToken());
         }
 
+        Arrays.sort(sang);
+        
         int M = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-
-        List<Integer> result = new ArrayList<>();
-
+        
+        StringBuilder sb = new StringBuilder();
+        
         for (int i = 0; i < M; i++) {
             int card = Integer.parseInt(st.nextToken());
-            if (sangSet.contains(card)) {
-                result.add(1);
-            }else {
-                result.add(0);
+            if(binarySearch(sang,card)){
+                sb.append(1).append(" ");
+            }else{
+                sb.append(0).append(" ");
             }
         }
 
-        for (Integer integer : result) {
-            System.out.print(integer + " ");
+        System.out.println(sb);
+
+    }
+    
+    public static boolean binarySearch(int[] sang, int card) {
+        int left = 0;
+        int right = sang.length - 1;
+        
+        while (left <= right) {
+            int mid = (left+right) / 2;
+            
+            if (sang[mid] == card) {
+                return true;
+            }else if (sang[mid] < card) {
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
         }
+        
+        return false;
+        
     }
 }
