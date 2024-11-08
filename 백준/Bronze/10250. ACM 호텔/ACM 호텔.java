@@ -27,7 +27,7 @@ public class Main{
                 roomNumber = "0" + roomNumber;
             }
 
-            System.out.println(floor+""+roomNumber);
+            System.out.println(floor+roomNumber);
         }
     }
 }
