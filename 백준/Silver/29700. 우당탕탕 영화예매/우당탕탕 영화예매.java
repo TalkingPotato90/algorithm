@@ -22,7 +22,7 @@ public class Main {
                     relay++;
                     if(relay >= K) {
                         count++;
-                        relay = K - 1;
+                        // relay = K - 1;
                     }
                 }else {
                     relay = 0;
