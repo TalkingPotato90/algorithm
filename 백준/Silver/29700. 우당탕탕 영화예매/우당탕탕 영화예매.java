@@ -11,18 +11,21 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        String empty = "0".repeat(K);
         int count = 0;
 
         for (int i = 0; i < N; i++) {
             String s = br.readLine();
-            if (!s.contains(empty)) {
-                continue;
-            }
+            int relay = 0;
 
-            for(int j = 0; j <= M - K; j++) {
-                if(s.substring(j, j + K).equals(empty)) {
-                    count++;
+            for(int j = 0; j < M; j++) {
+                if(s.charAt(j) == '0') {
+                    relay++;
+                    if(relay >= K) {
+                        count++;
+                        relay = K - 1;
+                    }
+                }else {
+                    relay = 0;
                 }
             }
         }
