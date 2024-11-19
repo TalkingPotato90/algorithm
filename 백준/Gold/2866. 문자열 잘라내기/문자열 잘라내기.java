@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -14,35 +13,56 @@ public class Main {
         int R = Integer.parseInt(st.nextToken());
         int C = Integer.parseInt(st.nextToken());
 
-        String[] lines = new String[R];
-
+        char[][] table = new char[R][C];
         for (int i = 0; i < R; i++) {
-            lines[i] = br.readLine();
-        }
-
-        String[] newLines = new String[C];
-        Arrays.fill(newLines, "");
-
-        for(String line : lines) {
-            for(int i = 0; i < C; i++) {
-                newLines[i] += line.charAt(i);
-            }
+            table[i] = br.readLine().toCharArray();
         }
 
         int result = 0;
-        for(int i = 0; i < R; i++) {
-            Set<String> unique = new HashSet<>(Arrays.asList(newLines));
-            if(unique.size() < C) {
+
+        long[] hashes = new long[C];
+        long base = 31;
+        long mod = 1_000_000_007;
+
+        for (int i = 0; i < C; i++) {
+            long hash = 0;
+            for (int j = 0; j < R; j++) {
+                hash = (hash * base + table[j][i]) % mod;
+            }
+            hashes[i] = hash;
+        }
+
+        for (int i = 0; i < R - 1; i++) {
+            Set<Long> set = new HashSet<>();
+            boolean isUnique = true;
+
+            for (int j = 0; j < C; j++) {
+                hashes[j] = (hashes[j] - table[i][j] * power(base, R - i - 1, mod) % mod + mod) %mod;
+
+                if(!set.add(hashes[j])) {
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if(!isUnique) {
                 break;
             }
             result++;
-
-            for (int j = 0; j < C; j++) {
-                newLines[j] = newLines[j].substring(1);
-            }
         }
 
-        System.out.println(result - 1);
+        System.out.println(result);
+    }
 
+    private static long power(long base, long exp, long mod) {
+        long result = 1;
+        while (exp > 0) {
+            if((exp & 1) ==1){
+                result = (result * base) % mod;
+            }
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+        return result;
     }
 }
