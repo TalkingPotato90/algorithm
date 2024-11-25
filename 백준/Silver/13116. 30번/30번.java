@@ -13,29 +13,20 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int testcases = Integer.parseInt(br.readLine());
 
-        int[] tree = new int[1023];
-
-        for (int i = 0; i < 1023; i++) {
-            tree[i] = i+1;
-        }
-
         for (int i = 0; i < testcases; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            int indexA = a - 1;
-            int indexB = b - 1;
-
-            while (indexA != indexB) {
-                if (indexA > indexB) {
-                    indexA = (indexA - 1) / 2;
+            while (a != b) {
+                if (a > b) {
+                    a /= 2;
                 } else {
-                    indexB = (indexB - 1) / 2;
+                    b /= 2;
                 }
             }
 
-            System.out.println(tree[indexA] * 10);
+            System.out.println(a * 10);
 
         }
     }
