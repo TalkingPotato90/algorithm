@@ -23,14 +23,14 @@ class Solution {
         return answer;
     }
     
-    public static int calculate(int count){
-        switch(count){
-            case 2: return 5;
-            case 3 : return 4;
-            case 4 : return 3;
-            case 5 : return 2;
-            case 6 : return 1;
-                default : return 6;
-        }
+    public static int calculate(int count) {
+        return switch (count) {
+            case 2 -> 5;
+            case 3 -> 4;
+            case 4 -> 3;
+            case 5 -> 2;
+            case 6 -> 1;
+            default -> 6;
+        };
     }
 }
