@@ -14,7 +14,7 @@ class Solution {
             while (d < 0 || p < 0){
                 d += cap;
                 p += cap;
-                count ++;
+                count++;
             }
 
             answer += (i + 1) * 2 * count;
