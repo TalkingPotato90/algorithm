@@ -1,12 +1,10 @@
-import java.util.*;
-
 class Solution {
-    public long solution(int cap, int n, int[] deliveries, int[] pickups) {
+public long solution(int cap, int n, int[] deliveries, int[] pickups) {
         long answer = 0;
 
         int deliveryLeft = n - 1;
         int pickupLeft = n - 1;
-        
+
         while (deliveryLeft >= 0 || pickupLeft >= 0) {
             int distance = 0;
             while (deliveryLeft >= 0 && deliveries[deliveryLeft] == 0) {
@@ -19,32 +17,25 @@ class Solution {
 
             answer += distance * 2;
 
-            int remainingCap = cap;
+            deliveryLeft = getDeliveryLeft(deliveries, deliveryLeft, cap);
 
-            while (deliveryLeft >= 0 && remainingCap > 0) {
-                if (deliveries[deliveryLeft] <= remainingCap) {
-                    remainingCap -= deliveries[deliveryLeft];
-                    deliveries[deliveryLeft] = 0;
-                    deliveryLeft--;
-                } else {
-                    deliveries[deliveryLeft] -= remainingCap;
-                    remainingCap = 0;
-                }
-            }
+            pickupLeft = getDeliveryLeft(pickups, pickupLeft, cap);
+        }
 
-            remainingCap = cap;
-            while (pickupLeft >= 0 && remainingCap > 0) {
-                if (pickups[pickupLeft] <= remainingCap) {
-                    remainingCap -= pickups[pickupLeft];
-                    pickups[pickupLeft] = 0;
-                    pickupLeft--;
-                } else {
-                    pickups[pickupLeft] -= remainingCap;
-                    remainingCap = 0;
-                }
+        return answer;
+    }
+
+    private int getDeliveryLeft(int[] deliveries, int deliveryLeft, int remainingCap) {
+        while (deliveryLeft >= 0 && remainingCap > 0) {
+            if (deliveries[deliveryLeft] <= remainingCap) {
+                remainingCap -= deliveries[deliveryLeft];
+                deliveries[deliveryLeft] = 0;
+                deliveryLeft--;
+            } else {
+                deliveries[deliveryLeft] -= remainingCap;
+                remainingCap = 0;
             }
         }
-        
-        return answer;
+        return deliveryLeft;
     }
 }
