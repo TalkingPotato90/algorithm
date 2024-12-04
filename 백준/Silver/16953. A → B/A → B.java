@@ -17,29 +17,32 @@ public class Main {
 
     }
 
-    private static long bfs(int a, int b) {
-        Queue<long[]> queue = new LinkedList<>();
-        queue.add(new long[]{a,1});
-
+    private static int bfs(int a, int b) {
+        Queue<Long> queue = new LinkedList<>();
+        queue.offer((long) a);
+        int count = 1;
 
         while (!queue.isEmpty()) {
-            long[] temp = queue.poll();
-            long c = temp[0];
-            long count = temp[1];
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                long temp = queue.poll();
 
-            if (c == b) {
-                return count;
-            }
+                if (temp == b) {
+                    return count;
+                }
 
-            long next1 = c * 2;
-            long next2 = c * 10 + 1;
+                long next1 = temp * 2;
+                long next2 = temp * 10 + 1;
 
-            if (next1 <= b) {
-                queue.offer(new long[] {next1, count + 1});
+                if(next1 <= b){
+                    queue.offer(next1);
+                }
+
+                if(next2 <= b){
+                    queue.offer(next2);
+                }
             }
-            if (next2 <= b) {
-                queue.offer(new long[] {next2, count + 1});
-            }
+            count++;
         }
 
         return -1;
