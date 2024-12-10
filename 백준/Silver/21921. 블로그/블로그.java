@@ -1,8 +1,10 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-public class Main{
-        public static void main(String[] args) throws IOException {
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
@@ -29,29 +31,18 @@ public class Main{
 
         int sum = 0;
         int max = 0;
-        int cnt = 0;
-        int same = 0;
+        int same = 1;
 
         for(int i = 0; i < n; i++){
             sum += visitors[i];
-            cnt++;
-            if(cnt >= x){
-                if(max < sum){
-                    max = sum;
-                }
-                sum -= visitors[i - x + 1];
-            }
-        }
-
-        sum = 0;
-        cnt = 0;
-
-        for(int i = 0; i < n; i++){
-            sum += visitors[i];
-            cnt++;
-            if(cnt >= x){
-                if(max == sum){
-                    same++;
+            if(i >= x - 1){
+                if(max <= sum){
+                    if(max == sum){
+                        same++;
+                    }else{
+                        same = 1;
+                        max = sum;
+                    }
                 }
                 sum -= visitors[i - x + 1];
             }
