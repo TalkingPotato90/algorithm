@@ -5,27 +5,33 @@ public class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int testCase = Integer.parseInt(br.readLine());
-        int[] sum = new int[testCase];
+        long[] sum = new long[testCase];
         
         for(int i = 0; i < testCase; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             int human = Integer.parseInt(st.nextToken());
-            int time = 0;
+            long time = 0L;
             for(int j = 0; j < human; j++){
-                time += Integer.parseInt(st.nextToken());
+                time += Long.parseLong(st.nextToken());
             }
             sum[i] = time;
         }
         
         Arrays.sort(sum);
-        int total = 0;
-        int[] prefixSum = new int[testCase];
+        long total = 0;
+        long[] prefixSum = new long[testCase];
         
         for(int i = 0; i < testCase; i++){
-            total += total + sum[i];
+            total += sum[i];
             prefixSum[i] = total;
         }
         
-        System.out.println(prefixSum[testCase-1]);
+        int result = 0;
+        
+        for(int i = 0; i < testCase; i++){
+            result += prefixSum[i];
+        }
+
+        System.out.println(result);
     }
 }
