@@ -26,7 +26,7 @@ public class Main{
             prefixSum[i] = total;
         }
         
-        int result = 0;
+        long result = 0;
         
         for(int i = 0; i < testCase; i++){
             result += prefixSum[i];
