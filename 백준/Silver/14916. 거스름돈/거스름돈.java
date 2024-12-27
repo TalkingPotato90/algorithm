@@ -1,21 +1,23 @@
 import java.io.*;
 
-public class Main{
-    public static void main(String[] args) throws IOException{
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
         int n = Integer.parseInt(br.readLine());
-        int result = -1;
-        
-        for(int i = n / 5; i >= 0; i--){
-            int remain = n - (5 * i);
-            if(remain % 2 == 0){
-                int two = remain / 2;
-                result = i + two;
-                break;
-            }
+
+        if (n == 1 || n == 3) {
+            System.out.println(-1);
+            return;
         }
-        
-        System.out.println(result);
+
+        int quotient = n / 5;
+        int remainder = n % 5;
+
+        switch (remainder) {
+            case 0 -> System.out.println(quotient);
+            case 1, 4 -> System.out.println(quotient + 2);
+            case 2 -> System.out.println(quotient + 1);
+            case 3 -> System.out.println(quotient + 3);
+        }
     }
 }
