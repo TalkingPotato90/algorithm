@@ -23,7 +23,7 @@ public class Main{
         for(int i =0; i < 4; i++){
             operator[i] = Integer.parseInt(st.nextToken());
         }
-        
+
         dfs(1, arr[0]);
         System.out.println(max);
         System.out.println(min);
@@ -47,12 +47,12 @@ public class Main{
     }
 
     private static int calculate(int a, int b, int operator){
-        switch(operator){
-            case 0: return a + b;
-            case 1: return a - b;
-            case 2: return a * b;
-            case 3: return a / b;
-        }
-        return 0;
+        return switch(operator){
+            case 0 -> a + b;
+            case 1 -> a - b;
+            case 2 -> a * b;
+            case 3 -> a / b;
+            default -> 0;
+        };
     }
 }
